@@ -12,38 +12,39 @@ struct UserDetailsView: View {
     var body: some View {
         ZStack {
             Color.mainBackground.ignoresSafeArea()
-            VStack(spacing: 0) {
-                Text(user.name)
-                    .font(.largeTitle)
-                    .foregroundStyle(Color.primary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding([.top], 20)
-                    .padding([.bottom], 5)
-                Text("\(user.email)")
-                    .font(.headline)
-                    .foregroundStyle(Color.primary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding([.top], 10)
-                    .padding([.bottom], 5)
-                
-                if let address = user.address {
-                    Text("\(address.street)")
-                        .font(.body)
+            ScrollView {
+                VStack(spacing: 0) {
+                    Text(user.name)
+                        .font(.largeTitle)
+                        .foregroundStyle(Color.primary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding([.top], 20)
+                        .padding([.bottom], 5)
+                    Text("\(user.email)")
+                        .font(.headline)
                         .foregroundStyle(Color.primary)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding([.top], 10)
-                    Text("\(address.zipcode) \(address.state)")
-                        .font(.body)
-                        .foregroundStyle(Color.primary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Text("\(address.city)")
-                        .font(.body)
-                        .foregroundStyle(Color.primary)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding([.bottom], 5)
+                    
+                    if let address = user.address {
+                        Text("\(address.street)")
+                            .font(.body)
+                            .foregroundStyle(Color.primary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding([.top], 10)
+                        Text("\(address.zipcode) \(address.state)")
+                            .font(.body)
+                            .foregroundStyle(Color.primary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("\(address.city)")
+                            .font(.body)
+                            .foregroundStyle(Color.primary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
                 }
-                Spacer()
+                .padding(.horizontal, 20)
             }
-            .padding(.horizontal, 20)
             
         }.navigationTitle(user.name)
         
