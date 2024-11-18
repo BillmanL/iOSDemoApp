@@ -29,8 +29,8 @@ struct LinnarBillmanDemoTests {
     }
     
     @Test func textGetAndSaveToUserDefaults() async throws {
-        MovieMock.clearDataFromUserDefaults()
         let movies = try await MovieMock.fetchDataFromBackend()
+        MovieMock.clearDataFromUserDefaults()
         #expect(MovieMock.getDataFromUserDefaults().isEmpty)
         MovieMock.saveDataToUserDefaults(movies)
         let retrievedMovies = MovieMock.getDataFromUserDefaults()
@@ -53,31 +53,14 @@ struct MovieMock: CacheableMovies {
     }
     
     static func getDataFromUserDefaults() -> [Movie] {
-        guard let data = UserDefaults.standard.data(forKey: "LinnarDemoApp_Test_Movies") else {
-            return []
-        }
-        
-        do {
-            let decoder = JSONDecoder()
-            let movies = try decoder.decode([Movie].self, from: data)
-            return movies
-        } catch {
-            return []
-        }
+        return UserDefaultsHelper.getDecodableDataFromUserDefaults(for: "LinnarDemoApp_Test_Movies", model: [Movie].self) ?? []
     }
     
     static func saveDataToUserDefaults(_ movies: [Movie]) {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        
-        guard let data = try? encoder.encode(movies) else {
-            return
-        }
-        
-        UserDefaults.standard.set(data, forKey: "LinnarDemoApp_Test_Movies")
+        UserDefaultsHelper.saveCodableDataToUserDefaults(movies, for: "LinnarDemoApp_Test_Movies")
     }
     
     static func clearDataFromUserDefaults() {
-        UserDefaults.standard.removeObject(forKey: "LinnarDemoApp_Test_Movies")
+        UserDefaultsHelper.clearDataFromUserDefaults(for: "LinnarDemoApp_Test_Movies")
     }
 }
