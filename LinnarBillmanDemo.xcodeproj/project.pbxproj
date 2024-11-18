@@ -43,6 +43,7 @@
 				API/APIClient.swift,
 				API/Router.swift,
 				Assets/Localization/Localizable.xcstrings,
+				Helpers/UserDefaultsHelper.swift,
 				Models/Movie.swift,
 				Models/User.swift,
 			);
@@ -54,6 +55,7 @@
 				API/APIClient.swift,
 				API/Router.swift,
 				Assets/Localization/Localizable.xcstrings,
+				Helpers/UserDefaultsHelper.swift,
 				Models/Movie.swift,
 				Models/User.swift,
 			);
