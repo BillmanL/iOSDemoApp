@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "username": "johndoe",
+    "email": "johndoe@example.com",
+    "address": {
+      "street": "123 Main St",
+      "city": "San Francisco",
+      "state": "CA",
+      "zipcode": "94111"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Jane Doe",
+    "username": "janedoe",
+    "email": "janedoe@example.com",
+    "address": {
+      "street": "456 Market St",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zipcode": "90001"
+    }
+  }
+]

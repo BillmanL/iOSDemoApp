@@ -7,20 +7,35 @@
 
 import Foundation
 
+enum UserDefaultsKey: String {
+    case movies = "LinnarDemoApp_Movies"
+    case users = "LinnarDemoApp_Users"
+    case moviesCacheTimeStamp = "LinnarDemoApp_Cache_Movies_Timestamp"
+    case usersCacheTimeStamp = "LinnarDemoApp_Cache_Users_Timestamp"
+    
+    var keyString: String {
+        if DemoAPI.shared.environment == .mock {
+            return self.rawValue+"_Mock"
+        } else {
+            return self.rawValue
+        }
+    }
+}
+
 class UserDefaultsHelper {
-    static func saveCacheTimeStamp(for key: String) {
-        UserDefaults.standard.set(Date(), forKey: key)
+    static func saveCacheTimeStamp(for key: UserDefaultsKey) {
+        UserDefaults.standard.set(Date(), forKey: key.keyString)
     }
     
-    static func getCacheTimeStamp(for key: String) -> Date? {
-        guard let date = UserDefaults.standard.object(forKey: key) as? Date else {
+    static func getCacheTimeStamp(for key: UserDefaultsKey) -> Date? {
+        guard let date = UserDefaults.standard.object(forKey: key.keyString) as? Date else {
             return nil
         }
         return date
     }
     
-    static func getDecodableDataFromUserDefaults<T>(for key: String, model: T.Type) -> T? where T: Decodable {
-        guard let data = UserDefaults.standard.data(forKey: key) else {
+    static func getDecodableDataFromUserDefaults<T>(for key: UserDefaultsKey, model: T.Type) -> T? where T: Decodable {
+        guard let data = UserDefaults.standard.data(forKey: key.keyString) else {
             return nil
         }
         
@@ -33,7 +48,7 @@ class UserDefaultsHelper {
         }
     }
     
-    static func saveCodableDataToUserDefaults<T>(_ object: T, for key: String) where T: Encodable {
+    static func saveCodableDataToUserDefaults<T>(_ object: T, for key: UserDefaultsKey) where T: Encodable {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         
@@ -41,10 +56,10 @@ class UserDefaultsHelper {
             return
         }
         
-        UserDefaults.standard.set(data, forKey: key)
+        UserDefaults.standard.set(data, forKey: key.keyString)
     }
     
-    static func clearDataFromUserDefaults(for key: String) {
-        UserDefaults.standard.removeObject(forKey: key)
+    static func clearDataFromUserDefaults(for key: UserDefaultsKey) {
+        UserDefaults.standard.removeObject(forKey: key.keyString)
     }
 }

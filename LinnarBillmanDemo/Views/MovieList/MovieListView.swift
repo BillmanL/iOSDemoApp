@@ -11,6 +11,7 @@ struct MovieListView: View {
     @State var movies: [Movie] = []
     @State var error: Error?
     @State var isLoading: Bool = true
+    @State var showError: Bool = false
     
     var body: some View {
         ZStack {
@@ -21,8 +22,8 @@ struct MovieListView: View {
                     Spacer()
                 } else {
                     VStack {
-                        if let error {
-                            ErrorComponentView(error: error).padding(10)
+                        if showError {
+                            ErrorComponentView(error: error, showError: $showError).padding(10)
                         }
                         ScrollView {
                             LazyVStack {
@@ -47,9 +48,12 @@ struct MovieListView: View {
                 do {
                     movies = try await Movie.fetchDataFromBackend()
                     Movie.saveDataToUserDefaults(movies)
+                    self.error = nil
+                    self.showError = false
                     isLoading = false
                 } catch {
                     self.error = error
+                    self.showError = true
                     isLoading = false
                 }
             } else {
@@ -78,6 +82,8 @@ struct MovieListView: View {
                 movies = newMovies
                 Movie.saveDataToUserDefaults(movies)
             }
+            self.error = nil
+            self.showError = false
         } catch {
             /// In this case i chose to fail silently here. But one could certainly go for a more verbal approach and tell the user the fetching failed
         }

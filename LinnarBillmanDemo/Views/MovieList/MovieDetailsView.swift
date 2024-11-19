@@ -51,6 +51,7 @@ struct MovieDetailsView: View {
                 if let imdbUrl = movie.imdbUrl {
                     Link(destination: imdbUrl, label: {
                         PrimaryButton(text: NSLocalizedString("Movie.Detail.Button.Text", comment: ""))
+                            .accessibilityIdentifier("imdbButton")
                     }).padding(.bottom, 20)
                 }
             }

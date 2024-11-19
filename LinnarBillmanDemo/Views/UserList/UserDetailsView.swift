@@ -46,7 +46,7 @@ struct UserDetailsView: View {
                 .padding(.horizontal, 20)
             }
             
-        }.navigationTitle(user.name)
+        }
         
     }
 }

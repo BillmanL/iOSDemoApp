@@ -41,11 +41,27 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				API/APIClient.swift,
-				API/Router.swift,
+				API/Mock/JSON/movies.json,
+				API/Mock/JSON/users.json,
+				API/Mock/MockAPIClient.swift,
+				API/Network/NetworkLayerClient.swift,
+				API/Network/Router.swift,
+				Assets/Assets.xcassets,
 				Assets/Localization/Localizable.xcstrings,
+				"Extensions/Double+Extension.swift",
 				Helpers/UserDefaultsHelper.swift,
+				LinnarBillmanDemoApp.swift,
 				Models/Movie.swift,
 				Models/User.swift,
+				Views/Components/ErrorComponentView.swift,
+				Views/Components/PrimaryButton.swift,
+				Views/MovieList/MovieDetailsView.swift,
+				Views/MovieList/MovieListRow.swift,
+				Views/MovieList/MovieListView.swift,
+				Views/StartView.swift,
+				Views/UserList/UserDetailsView.swift,
+				Views/UserList/UserListRow.swift,
+				Views/UserList/UserListView.swift,
 			);
 			target = 6453DFD52CEB5F6200790A1C /* LinnarBillmanDemoTests */;
 		};
@@ -53,11 +69,27 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				API/APIClient.swift,
-				API/Router.swift,
+				API/Mock/JSON/movies.json,
+				API/Mock/JSON/users.json,
+				API/Mock/MockAPIClient.swift,
+				API/Network/NetworkLayerClient.swift,
+				API/Network/Router.swift,
+				Assets/Assets.xcassets,
 				Assets/Localization/Localizable.xcstrings,
+				"Extensions/Double+Extension.swift",
 				Helpers/UserDefaultsHelper.swift,
+				LinnarBillmanDemoApp.swift,
 				Models/Movie.swift,
 				Models/User.swift,
+				Views/Components/ErrorComponentView.swift,
+				Views/Components/PrimaryButton.swift,
+				Views/MovieList/MovieDetailsView.swift,
+				Views/MovieList/MovieListRow.swift,
+				Views/MovieList/MovieListView.swift,
+				Views/StartView.swift,
+				Views/UserList/UserDetailsView.swift,
+				Views/UserList/UserListRow.swift,
+				Views/UserList/UserListView.swift,
 			);
 			target = 6453DFDF2CEB5F6200790A1C /* LinnarBillmanDemoUITests */;
 		};

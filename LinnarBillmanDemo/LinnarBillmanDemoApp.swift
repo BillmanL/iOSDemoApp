@@ -11,7 +11,11 @@ import SwiftUI
 struct LinnarBillmanDemoApp: App {
     var body: some Scene {
         WindowGroup {
-            StartView()
+            StartView().onAppear {
+                if CommandLine.arguments.contains("MockedEnvironment") {
+                    DemoAPI.shared.environment = .mock
+                }
+            }
         }
     }
 }

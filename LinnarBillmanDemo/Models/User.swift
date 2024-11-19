@@ -22,38 +22,31 @@ struct User: Codable, Identifiable, Equatable, Hashable {
     let address: Address?
 }
 
-/// Defining protocol makes mocking and testing easier
-protocol CacheableUsers {
-    static func fetchDataFromBackend() async throws -> [User]
-    static func getDataFromUserDefaults() -> [User]
-    static func saveDataToUserDefaults(_ movies: [User])
-    static func clearDataFromUserDefaults()
-}
-
-extension User: CacheableUsers {
+extension User {
     static func fetchDataFromBackend() async throws -> [User] {
-        return try await DemoRestClient.shared.requestDecodable(router: .GetUsers, model: [User].self)
+        return try await DemoAPI.shared.client.getUsers()
     }
     
     static func getDataFromUserDefaults() -> [User] {
-        return UserDefaultsHelper.getDecodableDataFromUserDefaults(for: "LinnarDemoApp_Users", model: [User].self) ?? []
+        return UserDefaultsHelper.getDecodableDataFromUserDefaults(for: .users, model: [User].self) ?? []
     }
     
-    static func saveDataToUserDefaults(_ movies: [User]) {
-        UserDefaultsHelper.saveCodableDataToUserDefaults(movies, for: "LinnarDemoApp_Users")
+    static func saveDataToUserDefaults(_ users: [User]) {
+        UserDefaultsHelper.saveCodableDataToUserDefaults(users, for: .users)
         User.saveCacheTimeStamp()
     }
     
     static func clearDataFromUserDefaults() {
-        UserDefaultsHelper.clearDataFromUserDefaults(for: "LinnarDemoApp_Users")
+        UserDefaultsHelper.clearDataFromUserDefaults(for: .users)
+        UserDefaultsHelper.clearDataFromUserDefaults(for: .usersCacheTimeStamp)
     }
     
     static func saveCacheTimeStamp() {
-        UserDefaultsHelper.saveCacheTimeStamp(for: "LinnarDemoApp_Cache_User_Timestamp")
+        UserDefaultsHelper.saveCacheTimeStamp(for: .usersCacheTimeStamp)
     }
     
     static func getCacheTimeStamp() -> Date? {
-        return UserDefaultsHelper.getCacheTimeStamp(for: "LinnarDemoApp_Cache_User_Timestamp")
+        return UserDefaultsHelper.getCacheTimeStamp(for: .usersCacheTimeStamp)
     }
 }
 

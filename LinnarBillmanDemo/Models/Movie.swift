@@ -18,44 +18,33 @@ struct Movie: Codable, Identifiable, Equatable, Hashable {
         case name = "movie"
         case imdbUrl = "imdb_url"
     }
-    
-    static func == (lhs: Movie, rhs: Movie) -> Bool {
-        return lhs.id == rhs.id && lhs.name == rhs.name && lhs.rating == rhs.rating && lhs.imdbUrl == rhs.imdbUrl
-    }
 }
 
-/// Defining protocol makes mocking and testing easier
-protocol CacheableMovies {
-    static func fetchDataFromBackend() async throws -> [Movie]
-    static func getDataFromUserDefaults() -> [Movie]
-    static func saveDataToUserDefaults(_ movies: [Movie])
-    static func clearDataFromUserDefaults()
-}
-
-extension Movie: CacheableMovies {
+extension Movie {
     static func fetchDataFromBackend() async throws -> [Movie] {
-        return try await DemoRestClient.shared.requestDecodable(router: .GetMovies, model: [Movie].self)
+        return try await DemoAPI.shared.client.getMovies()
     }
     
     static func getDataFromUserDefaults() -> [Movie] {
-        return UserDefaultsHelper.getDecodableDataFromUserDefaults(for: "LinnarDemoApp_Movies", model: [Movie].self) ?? []
+        return UserDefaultsHelper.getDecodableDataFromUserDefaults(for: .movies, model: [Movie].self) ?? []
     }
     
     static func saveDataToUserDefaults(_ movies: [Movie]) {
-        UserDefaultsHelper.saveCodableDataToUserDefaults(movies, for: "LinnarDemoApp_Movies")
+        UserDefaultsHelper.saveCodableDataToUserDefaults(movies, for: .movies)
         Movie.saveCacheTimeStamp()
     }
     
     static func clearDataFromUserDefaults() {
-        UserDefaultsHelper.clearDataFromUserDefaults(for: "LinnarDemoApp_Movies")
+        UserDefaultsHelper.clearDataFromUserDefaults(for: .movies)
+        UserDefaultsHelper.clearDataFromUserDefaults(for: .moviesCacheTimeStamp)
     }
     
     static func saveCacheTimeStamp() {
-        UserDefaultsHelper.saveCacheTimeStamp(for: "LinnarDemoApp_Cache_Movie_Timestamp")
+        UserDefaultsHelper.saveCacheTimeStamp(for: .moviesCacheTimeStamp)
     }
     
     static func getCacheTimeStamp() -> Date? {
-        return UserDefaultsHelper.getCacheTimeStamp(for: "LinnarDemoApp_Cache_Movie_Timestamp")
+        return UserDefaultsHelper.getCacheTimeStamp(for: .moviesCacheTimeStamp)
     }
 }
 
